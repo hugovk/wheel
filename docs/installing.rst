@@ -22,4 +22,4 @@ Python and OS Compatibility
 ---------------------------
 
 wheel should work on any Python implementation and operating system and is
-compatible with Python version 2.7 and upwards of 3.4.
+compatible with Python version 2.7 and upwards of 3.5.
