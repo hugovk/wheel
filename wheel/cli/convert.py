@@ -125,13 +125,13 @@ def parse_wininst_info(wininfo_name, egginfo_name):
     if egginfo_name:
         egginfo = egg_info_re.search(egginfo_name)
         if not egginfo:
-            raise ValueError("Egg info filename %s is not valid" % (egginfo_name,))
+            raise ValueError("Egg info filename {} is not valid".format(egginfo_name))
 
     # Parse the wininst filename
     # 1. Distribution name (up to the first '-')
     w_name, sep, rest = wininfo_name.partition('-')
     if not sep:
-        raise ValueError("Installer filename %s is not valid" % (wininfo_name,))
+        raise ValueError("Installer filename {} is not valid".format(wininfo_name))
 
     # Strip '.exe'
     rest = rest[:-4]
@@ -150,7 +150,7 @@ def parse_wininst_info(wininfo_name, egginfo_name):
     # 3. Version and architecture
     w_ver, sep, w_arch = rest.rpartition('.')
     if not sep:
-        raise ValueError("Installer filename %s is not valid" % (wininfo_name,))
+        raise ValueError("Installer filename {} is not valid".format(wininfo_name))
 
     if egginfo:
         w_name = egginfo.group('name')

@@ -16,7 +16,7 @@ def get_config_var(var):
     try:
         return sysconfig.get_config_var(var)
     except IOError as e:  # pip Issue #1074
-        warnings.warn("{0}".format(e), RuntimeWarning)
+        warnings.warn("{}".format(e), RuntimeWarning)
         return None
 
 
@@ -60,7 +60,7 @@ def get_flag(var, fallback, expected=True, warn=True):
     val = get_config_var(var)
     if val is None:
         if warn:
-            warnings.warn("Config variable '{0}' is unset, Python ABI tag may "
+            warnings.warn("Config variable '{}' is unset, Python ABI tag may "
                           "be incorrect".format(var), RuntimeWarning, 2)
         return fallback()
     return val == expected
@@ -90,7 +90,7 @@ def get_abi_tag():
                           sys.version_info < (3, 3))) \
                 and sys.version_info < (3, 3):
             u = 'u'
-        abi = '%s%s%s%s%s' % (impl, get_impl_ver(), d, m, u)
+        abi = '{}{}{}{}{}'.format(impl, get_impl_ver(), d, m, u)
     elif soabi and soabi.startswith('cpython-'):
         abi = 'cp' + soabi.split('-')[1]
     elif soabi:
@@ -153,7 +153,7 @@ def get_supported(versions=None, supplied_platform=None):
     # Current version, current API (built specifically for our Python):
     for abi in abis:
         for arch in platforms:
-            supported.append(('%s%s' % (impl, versions[0]), abi, arch))
+            supported.append(('{}{}'.format(impl, versions[0]), abi, arch))
 
     # abi3 modules compatible with older version of Python
     for version in versions[1:]:
@@ -162,15 +162,15 @@ def get_supported(versions=None, supplied_platform=None):
             break
         for abi in abi3s:   # empty set if not Python 3
             for arch in platforms:
-                supported.append(("%s%s" % (impl, version), abi, arch))
+                supported.append(("{}{}".format(impl, version), abi, arch))
 
     # No abi / arch, but requires our implementation:
     for i, version in enumerate(versions):
-        supported.append(('%s%s' % (impl, version), 'none', 'any'))
+        supported.append(('{}{}'.format(impl, version), 'none', 'any'))
         if i == 0:
             # Tagged specifically as being cross-version compatible
             # (with just the major version specified)
-            supported.append(('%s%s' % (impl, versions[0][0]), 'none', 'any'))
+            supported.append(('{}{}'.format(impl, versions[0][0]), 'none', 'any'))
 
     # Major Python version + platform; e.g. binaries not using the Python API
     for arch in platforms:
@@ -178,7 +178,7 @@ def get_supported(versions=None, supplied_platform=None):
 
     # No abi / arch, generic Python
     for i, version in enumerate(versions):
-        supported.append(('py%s' % (version,), 'none', 'any'))
+        supported.append(('py{}'.format(version), 'none', 'any'))
         if i == 0:
             supported.append(('py%s' % (version[0]), 'none', 'any'))
 

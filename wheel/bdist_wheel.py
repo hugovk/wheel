@@ -176,7 +176,7 @@ class bdist_wheel(Command):
                 supplied_platform=plat_name if self.plat_name_supplied else None)
             # XXX switch to this alternate implementation for non-pure:
             if not self.py_limited_api:
-                assert tag == supported_tags[0], "%s != %s" % (tag, supported_tags[0])
+                assert tag == supported_tags[0], "{} != {}".format(tag, supported_tags[0])
             assert tag in supported_tags, "would build wheel with unsupported tag {}".format(tag)
         return tag
 
@@ -333,10 +333,10 @@ class bdist_wheel(Command):
             import glob
             pat = os.path.join(os.path.dirname(egginfo_path), '*.egg-info')
             possible = glob.glob(pat)
-            err = "Egg metadata expected at %s but not found" % (egginfo_path,)
+            err = "Egg metadata expected at {} but not found".format(egginfo_path)
             if possible:
                 alt = os.path.basename(possible[0])
-                err += " (%s found - possible misnamed archive file?)" % (alt,)
+                err += " ({} found - possible misnamed archive file?)".format(alt)
 
             raise ValueError(err)
 
